@@ -4,15 +4,21 @@ import Form from './Components/Form'
 
 class App extends React.Component {
   state = {
-    bagels: ['bagel 1', 'bagel 2']
+    bagels: []
   }
   
+  componentDidMount() {
+    fetch('http://bagel-api-fis.herokuapp.com/bagels')
+      .then(response => response.json())
+      .then(result => this.setState({ bagels: result }))
+  }
+
   render() {
     return (
       <>
         <h1>This is Our bagels App</h1>
         <Form />
-        <BagelsContainer />
+        <BagelsContainer bagels={this.state.bagels} />
       </>
     );
   }
